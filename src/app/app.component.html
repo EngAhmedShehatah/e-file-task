@@ -1,0 +1,76 @@
+<p-toast></p-toast>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="text-center pt-3 text-success">Advanced Search</h2>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div id="search-field-rows-container">
+        <div dragula="search_fields" [(dragulaModel)]="search_fields">
+          <div class="search-field-row" *ngFor="let field of search_fields; let i = index"
+            [ngClass]="{'bg-lightBlue': field.attached_to.length > 0}" [id]="'search_field_' + i">
+            <div class="menu-item-container">
+              <button class="btn" type="button">
+                <i class="fa fa-ellipsis-h"></i>
+              </button>
+            </div>
+            <div class="mx-3">
+              <input type="text" class="text_field" [ngModel]="field.criterion" readonly>
+            </div>
+            <div class="mx-3">
+              <label class="mx-2">Condition</label>
+              <select name="condition" class="dropmenu">
+                <option value="1">test 1</option>
+                <option value="2">test 2</option>
+                <option value="3">test 3</option>
+              </select>
+            </div>
+            <div class="mx-3">
+              <label class="mx-2">Value</label>
+              <input type="text" class="text_field" [(ngModel)]="field.value">
+            </div>
+            <div class="font-icon-container ml-auto">
+              <button class="btn" type="button">
+                <i class="fa fa-font"></i>
+              </button>
+            </div>
+            <div class="relation-icon-container dropleft">
+              <button class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                type="button" [id]="'dropdownMenu' + i">
+                <i class="fa fa-link"></i>
+              </button>
+              <div class="dropdown-menu">
+                <button class="dropdown-item" type="button" *ngFor="let item of used_criterias; let j = index"
+                  [disabled]="item == field.criterion" (click)="onAttach(i, j)">{{ item }}</button>
+              </div>
+            </div>
+            <div class="delete-icon-container">
+              <button class="btn" type="button" (click)="onRemoveCriteria(i)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-12">
+      <div id="action-container" class="text-center">
+        <button class="btn text-primary" (click)="onAddCriteria()">
+          <i class="fa fa-plus-circle"></i>
+          Add Additional Criteria
+        </button>
+        <select class="dropmenu" [(ngModel)]="added_criteria">
+          <option value=null disabled>Please Choose Criterion</option>
+          <option [value]="criteria" *ngFor="let criteria of criterias">{{ criteria }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
